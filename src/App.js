@@ -1,5 +1,29 @@
+import Footer from './components/Footer'
+import Navbar from './components/Navbar'
+import Header from './components/header/Header'
+import Home from './pages/Home'
+import { WishlistProvider } from './context/WishlistContext'
+import { ShoppingCardProvider } from './context/ShoppingCardContext'
+import { ProductsProvider } from './context/ProductsContext'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+
 function App() {
-  return <h1 className='text-3xl font-bold underline'>Matcart Ecommerce</h1>
+  return (
+    <ProductsProvider>
+      <WishlistProvider>
+        <ShoppingCardProvider>
+          <Router>
+            <Header />
+            <Navbar />
+            <Routes>
+              <Route exact path='/' element={<Home />}></Route>
+            </Routes>
+            <Footer />
+          </Router>
+        </ShoppingCardProvider>
+      </WishlistProvider>
+    </ProductsProvider>
+  )
 }
 
 export default App
