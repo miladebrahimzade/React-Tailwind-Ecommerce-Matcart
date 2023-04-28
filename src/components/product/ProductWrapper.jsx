@@ -4,9 +4,9 @@ import { useContext } from 'react'
 import ProductContext from '../../context/ProductsContext'
 
 function ProductWrapper({ title }) {
-  const { products } = useContext(ProductContext)
+  const { filteredProducts } = useContext(ProductContext)
 
-  const latestProducts = products.slice(0, 4)
+  const latestProducts = filteredProducts.slice(0, 4)
 
   return (
     <div className='container pb-16'>

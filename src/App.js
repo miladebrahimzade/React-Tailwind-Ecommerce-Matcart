@@ -1,25 +1,21 @@
-import Footer from './components/Footer'
-import Navbar from './components/Navbar'
-import Header from './components/header/Header'
 import Home from './pages/Home'
+import Shop from './pages/Shop'
 import { WishlistProvider } from './context/WishlistContext'
 import { ShoppingCardProvider } from './context/ShoppingCardContext'
 import { ProductsProvider } from './context/ProductsContext'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-
+import { Routes, Route } from 'react-router-dom'
+import Layout from './components/layout/layout'
 function App() {
   return (
     <ProductsProvider>
       <WishlistProvider>
         <ShoppingCardProvider>
-          <Router>
-            <Header />
-            <Navbar />
+          <Layout>
             <Routes>
               <Route exact path='/' element={<Home />}></Route>
+              <Route path='/shop' element={<Shop />}></Route>
             </Routes>
-            <Footer />
-          </Router>
+          </Layout>
         </ShoppingCardProvider>
       </WishlistProvider>
     </ProductsProvider>

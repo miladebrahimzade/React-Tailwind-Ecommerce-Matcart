@@ -1,7 +1,7 @@
 import React from 'react'
 import { TfiHeart } from 'react-icons/tfi'
 import { useContext } from 'react'
-import WishlistContext from '../../context/WishlistContext'
+import WishlistContext from '../../../context/WishlistContext'
 import { Link } from 'react-router-dom'
 
 function WishlistIcon() {

@@ -38,7 +38,7 @@ function Product({ item }) {
       <div className='pt-4 pb-3 px-4'>
         <Link to='/product-detail'>
           <h4 className='font-medium text-xl mb-2 text-gray-800 hover:text-primary transition'>
-            {item.title}
+            {item.name}
           </h4>
         </Link>
         <div className='flex items-baseline mb-1 space-x-2 font-roboto'>

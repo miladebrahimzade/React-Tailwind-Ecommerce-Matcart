@@ -1,11 +1,11 @@
 import React from 'react'
 import { FaBars } from 'react-icons/fa'
-import bedIcon from '../assets/icons/bed.svg'
-import sofaIcon from '../assets/icons/sofa.svg'
-import officeIcon from '../assets/icons/office.svg'
-import outdoorIcon from '../assets/icons/terrace.svg'
-import mattressIcon from '../assets/icons/bed-2.svg'
-import diningIcon from '../assets/icons/restaurant.svg'
+import bedIcon from '../../assets/icons/bed.svg'
+import sofaIcon from '../../assets/icons/sofa.svg'
+import officeIcon from '../../assets/icons/office.svg'
+import outdoorIcon from '../../assets/icons/terrace.svg'
+import mattressIcon from '../../assets/icons/bed-2.svg'
+import diningIcon from '../../assets/icons/restaurant.svg'
 import { BrowserRouter as Router, NavLink } from 'react-router-dom'
 
 function Navbar() {

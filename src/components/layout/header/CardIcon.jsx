@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useContext } from 'react'
-import ShoppingCardContext from '../../context/ShoppingCardContext'
+import ShoppingCardContext from '../../../context/ShoppingCardContext'
 import { Link } from 'react-router-dom'
 
 function CardIcon() {
