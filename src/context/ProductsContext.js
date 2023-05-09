@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import ProductsData from '../data/ProductsData'
 import { useSearchParams } from 'react-router-dom'
 
@@ -9,57 +9,64 @@ export const ProductsProvider = ({ children }) => {
   const [filteredProducts, setFilteredProducts] = useState([])
   const [searchParams] = useSearchParams()
 
-  const getProducts = ({ categories, brands, price, sizes, colors, sort }) => {
-    let items = []
-    for (const product of products) {
-      if (categories && !categories.split(',').includes(product.category)) {
-        continue
+  const getProducts = useCallback(
+    ({ categories, brands, minPrice, maxPrice, sizes, colors, sort }) => {
+      let items = []
+      for (const product of products) {
+        if (categories && !categories.split(',').includes(product.category)) {
+          continue
+        }
+        if (brands && !brands.split(',').includes(product.brand)) {
+          continue
+        }
+        if (sizes && !sizes.split(',').includes(product.size)) {
+          continue
+        }
+        if (colors && !colors.split(',').includes(product.color)) {
+          continue
+        }
+        if (
+          minPrice &&
+          ((product.discount && product.discount < minPrice) ||
+            (!product.discount && product.price < minPrice))
+        ) {
+          continue
+        }
+        if (
+          maxPrice &&
+          ((product.discount && product.discount > maxPrice) ||
+            (!product.discount && product.price > maxPrice))
+        ) {
+          continue
+        }
+
+        items.push(product)
       }
-      if (brands && !brands.split(',').includes(product.brand)) {
-        continue
-      }
-      if (sizes && !sizes.split(',').includes(product.size)) {
-        continue
-      }
-      if (colors && !colors.split(',').includes(product.color)) {
-        continue
-      }
 
-      items.push(product)
-    }
+      items.sort((a, b) => {
+        const { name, price } = a
+        const { name: nameB, price: priceB } = b
 
-    // general solution - incomplete
-    // if (filters && Object.keys(filters).length !== 0) {
-    //   Object.entries(filters).forEach((item) => {
-    //     const [key, value] = item
-    //     const array = value.split(',')
-    //     console.log(key, array)
-    //     filteredProducts.push(products.filter())
-    //   })
-    // }
+        switch (sort) {
+          case 'priceAsc':
+            return price - priceB
 
-    items.sort((a, b) => {
-      const { name, price } = a
-      const { name: nameB, price: priceB } = b
+          case 'priceDes':
+            return priceB - price
 
-      switch (sort) {
-        case 'priceAsc':
-          return price - priceB
-
-        case 'priceDes':
-          return priceB - price
-
-        default:
-          return name.localeCompare(nameB)
-      }
-    })
-    setFilteredProducts(items)
-  }
+          default:
+            return name.localeCompare(nameB)
+        }
+      })
+      setFilteredProducts(items)
+    },
+    [products]
+  )
 
   useEffect(() => {
     const currentParams = Object.fromEntries([...searchParams])
     getProducts(currentParams)
-  }, [searchParams])
+  }, [searchParams, getProducts])
 
   return (
     <ProductsContext.Provider

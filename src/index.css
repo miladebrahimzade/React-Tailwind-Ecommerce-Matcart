@@ -17,3 +17,11 @@
     @apply font-roboto;
   }
 }
+@layer components {
+  .btn {
+    @apply border text-white px-8 py-2 rounded hover:bg-white transition;
+  }
+  .btn-primary {
+    @apply bg-primary border-primary  hover:text-primary;
+  }
+}

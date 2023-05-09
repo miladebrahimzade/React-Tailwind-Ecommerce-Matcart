@@ -4,14 +4,15 @@ import Search from './Search'
 import WishlistIcon from './WishlistIcon'
 import CardIcon from './CardIcon'
 import AccountIcon from './AccountIcon'
+import { Link } from 'react-router-dom'
 
 function Header() {
   return (
     <header className='py-4 shadow-sm bg-white'>
       <div className='container flex items-center justify-between'>
-        <a>
+        <Link to='/'>
           <img className='w-32' src={logo} alt='matcart-logo' />
-        </a>
+        </Link>
 
         <Search />
         <div className='flex items-center space-x-4'>

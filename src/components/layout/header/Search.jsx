@@ -12,9 +12,7 @@ function Search() {
         placeholder='Serach'
         className='w-full border border-primary border-r-0 pl-12 py-3 pr-3 rounded-l-md focus:outline-none'
       />
-      <button className='bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition'>
-        Search
-      </button>
+      <button className='btn btn-primary rounded-l-none '>Search</button>
     </div>
   )
 }

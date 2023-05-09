@@ -38,7 +38,7 @@ function Shop() {
 
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb route={{ path: 'shop', title: 'Shop' }} />
       <div className='container grid grid-cols-4 gap-6 pt-4 pb-14 items-start'>
         <ShopSidebar />
         <div className='col-span-3'>

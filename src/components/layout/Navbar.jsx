@@ -1,4 +1,4 @@
-import React from 'react'
+import { useContext } from 'react'
 import { FaBars } from 'react-icons/fa'
 import bedIcon from '../../assets/icons/bed.svg'
 import sofaIcon from '../../assets/icons/sofa.svg'
@@ -6,9 +6,17 @@ import officeIcon from '../../assets/icons/office.svg'
 import outdoorIcon from '../../assets/icons/terrace.svg'
 import mattressIcon from '../../assets/icons/bed-2.svg'
 import diningIcon from '../../assets/icons/restaurant.svg'
-import { BrowserRouter as Router, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import AuthContext from '../../context/AuthContext'
 
 function Navbar() {
+  const { user, logout } = useContext(AuthContext)
+
+  const handleLogout = (e) => {
+    e.preventDefault()
+    logout()
+  }
+
   return (
     <nav className='bg-gray-800'>
       <div className='container flex'>
@@ -131,12 +139,22 @@ function Navbar() {
               Contact Us
             </NavLink>
           </div>
-          <NavLink
-            to='/login'
-            className='py-4 px-4 text-gray-200 hover:text-white transition'
-          >
-            Login / Register
-          </NavLink>
+          {user ? (
+            <a
+              href=''
+              className='py-4 px-4 text-gray-200 hover:text-white transition'
+              onClick={handleLogout}
+            >
+              Logout
+            </a>
+          ) : (
+            <NavLink
+              to='/login'
+              className='py-4 px-4 text-gray-200 hover:text-white transition'
+            >
+              Login / Register
+            </NavLink>
+          )}
         </div>
       </div>
     </nav>
