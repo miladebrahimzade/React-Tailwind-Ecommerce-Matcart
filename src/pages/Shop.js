@@ -6,8 +6,11 @@ import Product from '../components/product/Product'
 import ProductsContext from '../context/ProductsContext'
 import Paginate from '../components/Paginate'
 import { useSearchParams } from 'react-router-dom'
+import { useLocalStorageProducts } from '../helpers/useLocalStorageProducts'
 
 function Shop() {
+  const { wishlist, addProductToWishlist, removeProductFromWishlist } =
+    useLocalStorageProducts()
   const { filteredProducts } = useContext(ProductsContext)
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -39,7 +42,7 @@ function Shop() {
   return (
     <>
       <Breadcrumb route={{ path: 'shop', title: 'Shop' }} />
-      <div className='container grid grid-cols-4 gap-6 pt-4 pb-14 items-start'>
+      <div className='container grid grid-cols-4 gap-6  pb-14'>
         <ShopSidebar />
         <div className='col-span-3'>
           <div className='flex items-center mb-4'>
@@ -64,7 +67,13 @@ function Shop() {
           </div>
           <div className='grid grid-cols-3 gap-6'>
             {currentProducts.map((product) => (
-              <Product key={product.id} item={product} />
+              <Product
+                wishlist={wishlist}
+                addProductToWishlist={addProductToWishlist}
+                removeProductFromWishlist={removeProductFromWishlist}
+                key={product.id}
+                product={product}
+              />
             ))}
           </div>
           <Paginate

@@ -27,7 +27,7 @@ function Login() {
         <div className='space-y-5'>
           <div>
             <h4 className='text-2xl font-medium uppercase'>Login</h4>
-            <p>Login if you are a returing customer</p>
+            <p>Login if you are a returning customer</p>
           </div>
           <form className='space-y-5'>
             <div className='space-y-2'>

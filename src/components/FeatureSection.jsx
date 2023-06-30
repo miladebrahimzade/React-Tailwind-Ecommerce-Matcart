@@ -14,7 +14,7 @@ function FeatureSection() {
             className='w-12 h-12 object-contain'
           />
           <div>
-            <h4 className='font-meduim text-lg cursor-default'>
+            <h4 className='font-medium text-lg cursor-default'>
               Free Shopping
             </h4>
             <p className='text-gray-500 text-sm cursor-default'>
@@ -29,7 +29,7 @@ function FeatureSection() {
             className='w-12 h-12 object-contain'
           />
           <div>
-            <h4 className='font-meduim text-lg cursor-default'>
+            <h4 className='font-medium text-lg cursor-default'>
               Money Returns
             </h4>
             <p className='text-gray-500 text-sm cursor-default'>
@@ -44,7 +44,7 @@ function FeatureSection() {
             className='w-12 h-12 object-contain'
           />
           <div>
-            <h4 className='font-meduim text-lg cursor-default'>24/7 Support</h4>
+            <h4 className='font-medium text-lg cursor-default'>24/7 Support</h4>
             <p className='text-gray-500 text-sm cursor-default'>
               Customer support
             </p>

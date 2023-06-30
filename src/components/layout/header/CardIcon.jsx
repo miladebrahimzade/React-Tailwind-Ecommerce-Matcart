@@ -9,7 +9,7 @@ function CardIcon() {
 
   return (
     <Link
-      to='/card'
+      to='/shopping-cart'
       className='flex flex-col items-center justify-center space-y-1 text-gray-700 hover:text-primary transition relative'
     >
       <div className='text-2xl'>
