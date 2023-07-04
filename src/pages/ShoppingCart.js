@@ -2,11 +2,32 @@ import Breadcrumb from '../components/Breadcrumb'
 
 import Button from '../components/shared/Button'
 import Item from '../components/shopping-cart/Item'
+import { useLocalStorageCart } from '../helpers/useLocalStorageCart'
 
 function ShoppingCart() {
+  const {
+    cart,
+    incrementProductQuantity,
+    decrementProductQuantity,
+    removeProductFromCart,
+  } = useLocalStorageCart()
+
+  const subtotal = cart.reduce((add, item) => {
+    const totalProductPrice =
+      item.count * (item.discount ? item.discount : item.price)
+    return add + totalProductPrice
+  }, 0)
+
+  // If I needed to add delivery and tax cost
+  const delivery = 0
+  const tax = 0
+
+  const total = subtotal + delivery + tax
+
   return (
     <>
       <Breadcrumb route={{ path: 'shopping-cart', title: 'Shopping Cart' }} />
+
       <div className='container grid grid-cols-4 gap-6  mb-12'>
         {/* left Section */}
         <div className='col-span-3 space-y-4'>
@@ -16,8 +37,15 @@ function ShoppingCart() {
             <div className='col-span-2'>Total Price</div>
             <div className='col-span-1'></div>
           </div>
-          <Item />
-          <Item />
+          {cart.map((product) => (
+            <Item
+              key={product.id}
+              product={product}
+              incrementProductQuantity={incrementProductQuantity}
+              decrementProductQuantity={decrementProductQuantity}
+              removeProductFromCart={removeProductFromCart}
+            />
+          ))}
         </div>
         {/* Right section */}
         <div className='col-span-1 p-4 border rounded'>
@@ -27,20 +55,20 @@ function ShoppingCart() {
               <div className='space-y-2 mb-2'>
                 <div className='flex justify-between font-medium'>
                   <span>Subtotal</span>
-                  <span>$45.00</span>
+                  <span>$ {subtotal.toFixed(2)}</span>
                 </div>
                 <div className='flex justify-between'>
                   <span>Delivery</span>
-                  <span>Free</span>
+                  <span>{delivery ? '$' + delivery.toFixed(2) : 'Free'}</span>
                 </div>
                 <div className='flex justify-between'>
                   <span>Tax</span>
-                  <span>Free</span>
+                  <span>{tax ? '$' + tax.toFixed(2) : 'Free'}</span>
                 </div>
               </div>
               <div className='flex justify-between pt-2 font-semibold'>
                 <span className='uppercase'>Total:</span>
-                <span>$45.00</span>
+                <span>$ {total.toFixed(2)}</span>
               </div>
             </div>
           </div>
@@ -54,7 +82,7 @@ function ShoppingCart() {
               Apply
             </button>
           </div>
-          <Button classes='w-full '>Process to checkout</Button>
+          <Button classes='w-full'>Process to checkout</Button>
         </div>
       </div>
     </>

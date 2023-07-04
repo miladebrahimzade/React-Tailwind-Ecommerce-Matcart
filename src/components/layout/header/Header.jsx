@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '../../../assets/logo.svg'
 import Search from './Search'
 import WishlistIcon from './WishlistIcon'
-import CardIcon from './CardIcon'
+import CartIcon from './CartIcon'
 import AccountIcon from './AccountIcon'
 import { Link } from 'react-router-dom'
 
@@ -17,7 +17,7 @@ function Header() {
         <Search />
         <div className='flex items-center space-x-4'>
           <WishlistIcon />
-          <CardIcon />
+          <CartIcon />
           <AccountIcon />
         </div>
       </div>

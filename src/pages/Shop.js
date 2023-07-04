@@ -1,18 +1,36 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Breadcrumb from '../components/Breadcrumb'
 import ShopSidebar from '../components/filters/ShopSidebar'
 import { TiThLarge, TiThList } from 'react-icons/ti'
 import Product from '../components/product/Product'
-import ProductsContext from '../context/ProductsContext'
 import Paginate from '../components/Paginate'
 import { useSearchParams } from 'react-router-dom'
-import { useLocalStorageProducts } from '../helpers/useLocalStorageProducts'
+import { useLocalStorageWishlist } from '../helpers/useLocalStorageWishlist'
+import { useLocalStorageCart } from '../helpers/useLocalStorageCart'
+import { filterProducts } from '../store/productsSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Shop() {
-  const { wishlist, addProductToWishlist, removeProductFromWishlist } =
-    useLocalStorageProducts()
-  const { filteredProducts } = useContext(ProductsContext)
+  const dispatch = useDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const { filteredProducts } = useSelector((store) => store.products)
+
+  useEffect(() => {
+    const currentParams = Object.fromEntries([...searchParams])
+    dispatch(filterProducts(currentParams))
+  }, [searchParams, dispatch])
+
+  const { wishlist, addProductToWishlist, removeProductFromWishlist } =
+    useLocalStorageWishlist()
+
+  const {
+    cart,
+    addProductToCart,
+    incrementProductQuantity,
+    decrementProductQuantity,
+    removeProductFromCart,
+  } = useLocalStorageCart()
 
   const handleSorting = (e) => {
     const sort = e.target.value
@@ -68,6 +86,11 @@ function Shop() {
           <div className='grid grid-cols-3 gap-6'>
             {currentProducts.map((product) => (
               <Product
+                cart={cart}
+                addProductToCart={addProductToCart}
+                incrementProductQuantity={incrementProductQuantity}
+                decrementProductQuantity={decrementProductQuantity}
+                removeProductFromCart={removeProductFromCart}
                 wishlist={wishlist}
                 addProductToWishlist={addProductToWishlist}
                 removeProductFromWishlist={removeProductFromWishlist}

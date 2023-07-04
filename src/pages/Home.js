@@ -17,8 +17,8 @@ function Home() {
       <FeatureSection />
       <CategorySection />
       <ProductWrapper title='Top new arrival' />
-      <ProductWrapper title='Latest products' />
-      <Modal modalPopup={modalPopup} onClose={() => onClose()} />
+      {/* <ProductWrapper title='Latest products' /> */}
+      {/* <Modal modalPopup={modalPopup} onClose={() => onClose()} /> */}
     </>
   )
 }

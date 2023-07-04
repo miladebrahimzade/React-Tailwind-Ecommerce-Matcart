@@ -1,12 +1,25 @@
 import Breadcrumb from '../components/Breadcrumb'
-import heroBackground from '../assets/banner-bg.jpg'
+import Avatar from '../assets/banner-bg.jpg'
 import { AiOutlineIdcard, AiOutlineGift } from 'react-icons/ai'
 import { SlCreditCard } from 'react-icons/sl'
 import { TfiHeart } from 'react-icons/tfi'
 import { RiShutDownLine } from 'react-icons/ri'
+import { useLocalStorageWishlist } from '../helpers/useLocalStorageWishlist'
+import { useLocalStorageCart } from '../helpers/useLocalStorageCart'
+
 import Item from '../components/wishlist/Item'
 
 function Wishlist() {
+  const { wishlist, removeProductFromWishlist } = useLocalStorageWishlist()
+
+  const {
+    cart,
+    addProductToCart,
+    incrementProductQuantity,
+    decrementProductQuantity,
+    removeProductFromCart,
+  } = useLocalStorageCart()
+
   return (
     <>
       <Breadcrumb route={{ path: 'wishlist', title: 'Wishlist' }} />
@@ -18,7 +31,7 @@ function Wishlist() {
             <div className='w-12 h-12 rounded-full border b border-gray-300 '>
               <img
                 className='p-1 w-full h-full rounded-full object-cover'
-                src={heroBackground}
+                src={Avatar}
                 alt='user-avatar'
               />
             </div>
@@ -101,11 +114,22 @@ function Wishlist() {
         </div>
 
         {/* Right section */}
-        <div className='col-span-3 space-y-4'>
-          {/* Each Product */}
-          <Item />
-          <Item />
-        </div>
+        {wishlist.length > 0 && (
+          <div className='col-span-3 space-y-4'>
+            {wishlist.map((product) => (
+              <Item
+                key={product.id}
+                product={product}
+                cart={cart}
+                addProductToCart={addProductToCart}
+                incrementProductQuantity={incrementProductQuantity}
+                decrementProductQuantity={decrementProductQuantity}
+                removeProductFromCart={removeProductFromCart}
+                removeProductFromWishlist={removeProductFromWishlist}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </>
   )

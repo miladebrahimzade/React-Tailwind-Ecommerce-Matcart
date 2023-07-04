@@ -1,17 +1,21 @@
-import { createContext, useCallback, useEffect, useState } from 'react'
-import ProductsData from '../data/ProductsData'
-import { useSearchParams } from 'react-router-dom'
+import { createSlice } from '@reduxjs/toolkit'
+import products from '../data/ProductsData'
 
-const ProductsContext = createContext()
+const initialState = {
+  products: products,
+  filteredProducts: [],
+}
 
-export const ProductsProvider = ({ children }) => {
-  const [filteredProducts, setFilteredProducts] = useState([])
-  const [searchParams] = useSearchParams()
-
-  const getProducts = useCallback(
-    ({ categories, brands, minPrice, maxPrice, sizes, colors, sort }) => {
+export const productsSlice = createSlice({
+  name: 'products',
+  initialState,
+  reducers: {
+    filterProducts: (state, action) => {
+      const { categories, brands, minPrice, maxPrice, sizes, colors, sort } =
+        action.payload
       let items = []
-      for (const product of ProductsData) {
+      // console.log(state)
+      for (const product of state.products) {
         if (categories && !categories.split(',').includes(product.category)) {
           continue
         }
@@ -57,25 +61,15 @@ export const ProductsProvider = ({ children }) => {
             return name.localeCompare(nameB)
         }
       })
-      setFilteredProducts(items)
+      state.filteredProducts = items
     },
-    [ProductsData]
-  )
+    // needs adjustment for search
+    // searchProducts:(state,action) =>{state.products.filter((product) =>
+    //     product.name.toLowerCase().includes(search.toLowerCase())
+    //   )}
+  },
+})
 
-  useEffect(() => {
-    const currentParams = Object.fromEntries([...searchParams])
-    getProducts(currentParams)
-  }, [searchParams, getProducts])
+export const { filterProducts } = productsSlice.actions
 
-  return (
-    <ProductsContext.Provider
-      value={{
-        filteredProducts,
-      }}
-    >
-      {children}
-    </ProductsContext.Provider>
-  )
-}
-
-export default ProductsContext
+export default productsSlice.reducer

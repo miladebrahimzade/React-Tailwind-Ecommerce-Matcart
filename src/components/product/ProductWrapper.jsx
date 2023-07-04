@@ -1,12 +1,19 @@
-import React from 'react'
 import Product from './Product'
 import { useContext } from 'react'
 import ProductContext from '../../context/ProductsContext'
-import { useLocalStorageProducts } from '../../helpers/useLocalStorageProducts'
+import { useLocalStorageWishlist } from '../../helpers/useLocalStorageWishlist'
+import { useLocalStorageCart } from '../../helpers/useLocalStorageCart'
 
 function ProductWrapper({ title }) {
+  const {
+    cart,
+    addProductToCart,
+    incrementProductQuantity,
+    decrementProductQuantity,
+    removeProductFromCart,
+  } = useLocalStorageCart()
   const { wishlist, addProductToWishlist, removeProductFromWishlist } =
-    useLocalStorageProducts()
+    useLocalStorageWishlist()
   const { filteredProducts } = useContext(ProductContext)
 
   const latestProducts = filteredProducts.slice(0, 4)
@@ -20,6 +27,11 @@ function ProductWrapper({ title }) {
       <div className='grid grid-cols-4 gap-6'>
         {latestProducts.map((product) => (
           <Product
+            cart={cart}
+            addProductToCart={addProductToCart}
+            incrementProductQuantity={incrementProductQuantity}
+            decrementProductQuantity={decrementProductQuantity}
+            removeProductFromCart={removeProductFromCart}
             wishlist={wishlist}
             addProductToWishlist={addProductToWishlist}
             removeProductFromWishlist={removeProductFromWishlist}

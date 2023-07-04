@@ -38,6 +38,7 @@ function Login() {
                 title='use username: admin'
                 className='block w-full py-2 px-4 border rounded outline-red-200'
                 type='email'
+                id='email'
                 onChange={(e) => {
                   setEmail(e.target.value)
                 }}
@@ -52,6 +53,7 @@ function Login() {
                 title='use password: admin'
                 className='block w-full py-2 px-4 border rounded outline-red-200'
                 type='password'
+                id='password'
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />

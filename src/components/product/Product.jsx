@@ -1,16 +1,20 @@
 import { TfiHeart, TfiSearch } from 'react-icons/tfi'
 import { FaStar } from 'react-icons/fa'
-import { useContext } from 'react'
-import ShoppingCardContext from '../../context/ShoppingCardContext'
 import { Link } from 'react-router-dom'
-// import { useLocalStorageProducts } from '../../helpers/useLocalStorageProducts'
+
 function Product({
+  cart,
+  addProductToCart,
+  incrementProductQuantity,
+  decrementProductQuantity,
+  removeProductFromCart,
   product,
   wishlist,
   addProductToWishlist,
   removeProductFromWishlist,
 }) {
   const wishedProduct = wishlist.some((item) => item.id === product.id)
+  const cartProduct = cart.find((item) => item.id === product.id)
 
   const handleAddToWishlist = () => {
     if (wishedProduct) {
@@ -19,8 +23,21 @@ function Product({
       addProductToWishlist(product)
     }
   }
+  const handleAddToCart = () => {
+    if (cartProduct) {
+      removeProductFromCart(product.id)
+    } else {
+      addProductToCart(product)
+    }
+  }
 
-  const { addToCardItem } = useContext(ShoppingCardContext)
+  const handleDecrement = () => {
+    if (cartProduct.count > 1) decrementProductQuantity(product.id)
+    else removeProductFromCart(product.id)
+  }
+  const handleIncrement = () => {
+    incrementProductQuantity(product.id)
+  }
 
   return (
     <div className='bg-white shadow rounded overflow-hidden group'>
@@ -91,12 +108,32 @@ function Product({
           <div className='text-xs text-gray-500 ml-3'>({product.reviews})</div>
         </div>
       </div>
-      <button
-        onClick={addToCardItem}
-        className='block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition'
-      >
-        Add to cart
-      </button>
+      {cartProduct ? (
+        <div className='col-span-3 flex justify-center items-center'>
+          <button
+            className='px-3 py-1 border hover:bg-gray-200'
+            onClick={handleDecrement}
+          >
+            -
+          </button>
+          <div className='w-full text-center py-1 border-y outline-none'>
+            {cartProduct.count}
+          </div>
+          <button
+            className='px-3 py-1 border hover:bg-gray-200'
+            onClick={handleIncrement}
+          >
+            +
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={handleAddToCart}
+          className='block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition'
+        >
+          Add to cart
+        </button>
+      )}
     </div>
   )
 }

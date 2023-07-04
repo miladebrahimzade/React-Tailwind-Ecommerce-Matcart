@@ -14,9 +14,9 @@ const wishlistSlice = createSlice({
       const productId = action.payload
       return wishlist.filter((item) => item.id !== productId)
     },
-    setWishlist: (wishlist, action) => {
+    setWishlist: (_, action) => {
       const products = action.payload
-      // console.log(products)
+
       return products
     },
   },
